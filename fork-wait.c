@@ -19,7 +19,7 @@ void myExit(const int exitCode) {
 	int status;
 	int ret = waitpid(WAIT_FOR_ANY_CHILD, &status, WNOHANG);
 	if (ret == 0) {
-		// there are still child process(es) running
+		// there is no running child terminated
 		fprintf(stderr, "Error: active job running\n");
 		return;
 	}
