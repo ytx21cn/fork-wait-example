@@ -7,6 +7,14 @@
 
 const int WAIT_FOR_ANY_CHILD = -1;
 
+void sleepingChild(unsigned int sleepTime) {
+	printf("I am child. Sleeping for %d seconds\n", sleepTime);
+	sleep(sleepTime);
+	pid_t childPid = getpid();
+	printf("I am child. I will die now. (child PID: %d)\n", childPid);
+	exit(sleepTime * 50);
+}
+
 void myExit(const int exitCode) {
 	int status;
 	int ret = waitpid(WAIT_FOR_ANY_CHILD, &status, WNOHANG);
@@ -30,11 +38,7 @@ int main() {
 
 	if (pid == 0) {
 		// child process
-		printf("I am child. Sleeping for %d seconds\n", sleepTime);
-		sleep(sleepTime);
-		pid_t childPid = getpid();
-		printf("I am child. I will die now. (child PID: %d)\n", childPid);
-		exit(50);
+		sleepingChild(sleepTime);
 	}
 	else {
 		// parent process
